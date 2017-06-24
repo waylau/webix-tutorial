@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <script type="text/javascript" charset="utf-8">
+        /*  UI 配置 */
+        webix.ui({
+            rows: [
+                {
+                    view: "template",
+                    type: "header", 
+                    template: "我的应用!"
+                },
+                {
+                    view: "datatable",
+                    autoConfig: true,
+                    data: [
+                        { title: "Way Lau", year: 1987, votes: 533848, rating: 8.9, rank: 5 },
+                        { title: "老卫", year: 1987, votes: 53248, rating: 5.9, rank: 6 }
+                    ]
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>

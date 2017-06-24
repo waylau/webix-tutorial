@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <script type="text/javascript" charset="utf-8">
+        /*  UI 配置 */
+        webix.ready(function () {
+            webix.ui({
+                type: "space",
+                rows: [
+                    /* 1st row. Toolbar */
+                    {
+                        template: "Toolbar",
+                        height: 45,
+                        elements: [
+                            {
+                                view: "label",
+                                label: "Webix Email 客户端"
+                            }
+                        ]
+                    },
+                    /* 2nd row. The rest of application */
+                    {
+                        type: "wide",
+                        cols: [
+                            /* 1st column of the second row.
+                            /* Folder tree and Calendar */
+                            {
+                                type: "clean",
+                                rows: [
+                                    {
+                                        template: "Tree",
+                                        width: 280
+                                    },
+                                    {
+                                        template: "Calendar"
+                                    }
+                                ]
+                            },
+                            /* 2nd column of the second row.
+                            /* Email list, Buttons, and Message reader */
+                            {
+                                type: "wide",
+                                rows: [
+                                    { template: "Email List" },
+                                    {
+                                        height: 45, cols: [
+                                            { template: "Button1" },
+                                            { template: "Button2" },
+                                            {},
+                                            { template: "Button 3" }
+                                        ]
+                                    },
+                                    { template: "Message" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+        });
+    </script>
+</body>
+
+</html>
