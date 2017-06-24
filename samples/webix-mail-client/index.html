@@ -3,8 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css">
-    <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../codebase/webix.css" type="text/css"> 
+    <script src="../codebase/webix.js" type="text/javascript"></script>
+     <!--   <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css">
+    <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript"></script> -->
+
 </head>
 
 <body>
@@ -14,57 +17,160 @@
             webix.ui({
                 type: "space",
                 rows: [
-                    /* 1st row. Toolbar */
                     {
-                        template: "Toolbar",
+                        view: "toolbar",
                         height: 45,
                         elements: [
-                            {
-                                view: "label",
-                                label: "Webix Email 客户端"
-                            }
+                            { view: "label", label: "Webix Email 客户端" }
                         ]
                     },
-                    /* 2nd row. The rest of application */
                     {
                         type: "wide",
                         cols: [
-                            /* 1st column of the second row.
-                            /* Folder tree and Calendar */
                             {
                                 type: "clean",
                                 rows: [
                                     {
-                                        template: "Tree",
-                                        width: 280
+                                        view: "tree",
+                                        id: "my_tree",
+                                        select: true,
+                                        width: 280,
+                                        data: [
+                                            { id: "1", value: "收件箱" },
+                                            { id: "2", value: "已发送" },
+                                            { id: "3", value: "草稿箱" },
+                                            { id: "4", value: "垃圾箱" },
+                                            {
+                                                id: "5", value: "通讯录", open: true,
+                                                data: [
+                                                    { id: "5-1", value: "好友" },
+                                                    { id: "5-2", value: "家人" }
+                                                ]
+                                            }
+                                        ]
                                     },
                                     {
-                                        template: "Calendar"
+                                        view: "calendar",
+                                        timepicker: true
                                     }
                                 ]
                             },
-                            /* 2nd column of the second row.
-                            /* Email list, Buttons, and Message reader */
                             {
                                 type: "wide",
                                 rows: [
-                                    { template: "Email List" },
                                     {
-                                        height: 45, cols: [
-                                            { template: "Button1" },
-                                            { template: "Button2" },
-                                            {},
-                                            { template: "Button 3" }
+                                        id: "my_datatable",
+                                        view: "datatable",
+                                        scrollX: false,
+                                        columns: [
+                                            {
+                                                id: "checked", header: { content: "masterCheckbox" },
+                                                template: "{common.checkbox()}", width: 40
+                                            },
+                                            { id: "name", width: 250, header: "发件人" },
+                                            { id: "subject", header: "主题", fillspace: true },
+                                            { id: "date", header: "时间", width: 150 }
+                                        ],
+                                        data: [
+                                            {
+                                                id: 1, folder: 1, name: "Way Lau",
+                                                email: "waylau521@gmail.com", subject: "Invitation",
+                                                date: "25/07/2017 12:30:20"
+                                            },
+
+                                            {                                                
+                                                id: 2, folder: 1, name: "老卫",
+                                                email: "waylau521@163.com", subject: "Report",
+                                                date: "25/07/2017 16:10:07"
+                                            },
+                                            {
+                                                id: 11, folder: 2, name: "Way Lau",
+                                                email: "waylau521@gmail.com", subject: "Re: Forecast",
+                                                date: "25/07/2017 14:10:45"
+                                            },
+
+                                            {
+                                                id: 12, folder: 2, name: "老卫",
+                                                email: "waylau521@163.com", subject: "Party invitation",
+                                                date: "25/07/2017 17:05:10"
+                                            }
                                         ]
                                     },
-                                    { template: "Message" }
+                                    {
+                                        height: 45, cols: [
+                                            {
+                                                view:"button",
+                                                label:"回复",
+                                                width: 95
+                                            },
+                                            {
+                                                view:"button",
+                                                label:"创建",
+                                                width: 95,
+                                                click:function(){
+                                                    $$("my_win").getBody().clear();
+                                                    $$("my_win").show();
+                                                }
+                                            },
+                                            {},
+                                            {
+                                                view:"button",
+                                                label:"删除",
+                                                width: 95
+                                            }
+                                        ]
+                                    },
+                                    { 
+                                        id:"details",
+                                        template:"No message selected"
+                                    }
                                 ]
                             }
                         ]
                     }
                 ]
+                
             });
+
+            webix.ui({
+                view:"window",
+                move: true,
+                id:"my_win",
+                width:400,
+                head:"创建新邮件",
+                position: "center",
+                body: {
+                    view:"form",
+                    borderless:true,
+                    elements: [
+                    { view:"text", label:'收件人:', name:"address" },
+                    { view:"text", label:'主题:', name:"subject" },
+                    { view:"textarea", height:200, label:"内容:", name:"message"},
+                    { cols: [
+                        { view:"button", value: "发送", },
+                        { view:"button", value: "关闭", click:("$$('my_win').hide();") }
+                    ]},
+                    ],
+                }
+            });
+
+            // 绑定事件
+            $$("my_datatable").bind($$("my_tree"),function(obj,filter){
+                return obj.folder == filter.id;
+            });
+            
+            // 选中第一个节点
+            $$("my_tree").select(1);
+
+            var message = "大道至简  https://waylau.com";
+
+            $$("details").define("template",message);
+            $$("details").render();
+
         });
+
+
+    
     </script>
 </body>
 
