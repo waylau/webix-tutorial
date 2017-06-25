@@ -1,6 +1,6 @@
 # Webix Tutorial 《Webix 教程》
 
-![](images/spring-security-logo.jpg)
+![](images/webix-logo-dark.png)
  
 Webix  Tutorial takes you to learn Webix  step by step with a large number of samples. There is also a GitBook version of the book: <http://www.gitbook.com/book/waylau/webix-tutorial>.
 Let's [READ](SUMMARY.md)!
